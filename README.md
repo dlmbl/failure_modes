@@ -1,18 +1,14 @@
 # Exercise 7: Failure modes & Limits of Deep Learning
+
 ## Setup
+Please run the setup script to create the environment for this exercise and download data.
 
-Create a `conda` environment for this exercise and activate it:
-
-```
-conda create -n 07_fail_dl python
-conda activate 07_fail_dl
+```bash
+sh setup.sh
 ```
 
-Start Jupyter within this environment:
-
+When you are ready to start the exercise, make sure you are in your base environment and then run jupyter lab.
+```bash
+mamba activate base
+jupyter lab
 ```
-pip install jupyter
-jupyter notebook
-```
-
-...and continue with the instructions in the notebook.
