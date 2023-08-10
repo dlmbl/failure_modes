@@ -1,11 +1,12 @@
 # create mamba environment and activate it
 mamba create -n 07-failure-modes python
-mamba activate 07-failure-modes
+eval "$(conda shell.bash hook)"
+conda activate 07-failure-modes
 
 # install the ipython kernel for running jupyterlab
-mamba install ipykernel
+mamba install ipykernel ipywidgets
 
-# for TAs to format the notebooks 
+# for TAs to format the notebooks
 # mamba install jupytext black nbconvert
 
 # install libraries needed for the exercise
@@ -26,3 +27,5 @@ pip install seaborn
 
 # download data needed for the exercise
 python download_mnist.py
+
+conda deactivate

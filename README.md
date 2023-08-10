@@ -1,4 +1,4 @@
-# Exercise 7: Failure modes & Limits of Deep Learning
+# Exercise 7: Failure Modes & Limits of Deep Learning
 
 ## Setup
 Please run the setup script to create the environment for this exercise and download data.
