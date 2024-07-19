@@ -12,6 +12,8 @@ mamba install -y ipykernel ipywidgets
 # install libraries needed for the exercise
 # model interpretability
 pip install git+https://github.com/pytorch/captum.git
+# Dataset Colored MNIST
+pip install git+https://github.com/adjavon/classification.git
 # computer vision deep learning
 pip install torchvision
 # progress bars
