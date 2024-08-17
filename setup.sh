@@ -12,6 +12,8 @@ mamba install -y ipykernel ipywidgets
 # install libraries needed for the exercise
 # model interpretability
 pip install git+https://github.com/pytorch/captum.git
+# classification package
+pip install git+https://github.com/adjavon/classification.git
 # UNET package from dlmbl
 pip install git+https://github.com/dlmbl/dlmbl-unet.git
 # computer vision deep learning
