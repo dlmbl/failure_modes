@@ -497,6 +497,7 @@ pred_tainted_tainted, _ = predict(model_tainted, tainted_test_dataset)
 
 # We can investivate the results using the confusion matrix, which you should recall from the Introduction to Machine Learning exercise. The function in the cell below will create a nicely annotated confusion matrix.
 
+# +
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import pandas as pd
@@ -542,8 +543,7 @@ def cm_analysis(y_true, y_pred, title, figsize=(10,10)):
     fig, ax = plt.subplots(figsize=figsize)
     ax=sns.heatmap(cm, annot=annot, fmt='', vmax=30)
     ax.set_title(title)
-
-
+#-
 
 # Now we will generate confusion matrices for each model/data combination. Take your time and try and interpret these, and then try and answer the questions below.
 
@@ -986,9 +986,6 @@ def apply_denoising(image, model):
     # remove batch and channel dimensions before returning
     return prediction.detach().cpu()[0,0]
 
-
-
-# +
 # Displays: ground truth, noisy, and denoised images
 def visualize_denoising(model, dataset, index):
     orig_image = dataset[index][0][0]
@@ -1007,10 +1004,9 @@ def visualize_denoising(model, dataset, index):
     plt.show()
 
 # We pick 8 images to show:
+
 for i in range(8):
     visualize_denoising(unet_model, test_dataset, 123*i)
-    
-# -
 
 # <div class="alert alert-info"><h4>
 #     Task 5.1: </h4>
