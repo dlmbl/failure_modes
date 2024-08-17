@@ -1,5 +1,12 @@
 # Exercise 7: Failure Modes & Limits of Deep Learning
 
+## Getting this repo
+
+If you are working from the super repository https://github.com/dlmbl/DL-MBL-2024, don't forget to update this submodule:
+```
+git submodule update --init --recursive 07_failure_modes
+```
+
 ## Goal
 In Exercise 7: Failure Modes and Limits of Deep Learning, we delve into understanding the limits and failure modes of neural networks, especially in the context of image classification. This exercise highlights how differences between tainted and clean training datasets as well as test datasets can affect the performance of neural networks in ways that we will try to understand. By tampering with image datasets and introducing extra visual information, the exercise aims to illustrate real-world scenarios where data collection inconsistencies can corrupt datasets. The goal is to investigate the internal reasoning of neural networks, and use tools like Integrated Gradients, which help in identifying crucial areas of an image that influence classification decisions.
 
