@@ -109,6 +109,7 @@ plt.show()
 # We have locally changed images of 7s artificially for this exercise. What are some examples of ways that images can be corrupted or tainted during real-life data colleciton, for example in a hospital imaging environment or microscopy lab?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **1.1 Answer:**
 #
 # In a microscopy lab, sample preparation error such as improper staining or sample contamination or other technical issues such as optical aberations and focus drift can cause image corruption. Environmental factors such as vibrations or lighting variations may also contribute to image corruption. Digital artifacts like compression artifacts or noise, and other issues like operator error (improper manipulation, incorrect magnification...) will also lead to corrupted images.
@@ -128,6 +129,7 @@ plt.show()
 # In your above examples, if you knew you had a local corruption or difference between images in different classes of your data, could you remove it? How?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **1.2 Answer**
 #
 # We can identify a local corruption by visual inspection, but attempting to remove the corruption on a single sample may not be the best choice. Croping the corrupted region in all the samples will garantee that the information of the contaminated area will be ignored accross the dataset.
@@ -208,6 +210,7 @@ plt.show()
 # Think of a realistic example of such a corruption that would affect only some classes of data. If you notice the differences between classes, could you remove it? How?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **1.4 Answer**
 #
 # A first example of such a corruption would be that of data acquisition being performed with a different device for different classes. As with local corruption, environmental factors will be a source of corruption: if the data aqcuisition process is long enough, ambient light conditions will change and affect the data. Similarly, vibrations in the surrounding room may have an impact.
@@ -244,6 +247,7 @@ plt.show()
 # Given the changes we made to generate the tainted dataset, do you think a digit classification network trained on the tainted data will converge? Are the classes more or less distinct from each other than in the untainted dataset?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **1.5 Answer:**
 #
 # The digit classification network will converge on the tainted dataset, even more so than with the non-tainted dataset, as the classes are in fact more distinct now than they were prior to tainting. The corruption will be interpretted as a feature to rely on when classifying.
@@ -405,6 +409,7 @@ plt.ylabel('negative log likelihood loss')
 # Why do you think the tainted network has lower training loss than the clean network?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **2.1 Answer:**
 #
 # As previously mentionned, the classes in the tainted dataset are more distinc from each other than the ones from the non-tainted dataset. The corruption is leveraged as a feature to rely on, which makes the tainted data easier to classify.
@@ -420,6 +425,7 @@ plt.ylabel('negative log likelihood loss')
 # Do you think the tainted network will be more accurate than the clean network when applied to the <b>tainted</b> test data? Why?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **2.2 Answer:**
 #
 # Yes, the tainted network will be more accurate than the clean  network when applied to the tainted test data as it will leverage the corruption present in that test data, since it trained to do so. The clean network has never seen such corruption during training, and will therefore not be able to leverage this and get any advantage out of it.
@@ -435,6 +441,7 @@ plt.ylabel('negative log likelihood loss')
 # Do you think the tainted network will be more accurate than the clean network when applied to the <b>clean</b> test data? Why?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **2.3 Answer:**
 #
 # The tainted network is relying on grid patterns to detect 4s and on dots in the bottom right corner to detect 7s. Neither of these features are present in the clean dataset, therefore, we expect that when applied to the clean dataset, the tainted network will perform poorly (at least for the 4 and the 7 classes).
@@ -554,6 +561,7 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 # For the <b>clean</b> model and the <b>clean</b> dataset, which digit was least accurately predicted? What did the model predict instead? Why do you think these digits were confused by the model?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **3.1 Answer:**
 #
 # The clean model on the clean dataset predicted 5s least accuratly, with some confusion with 6s and 3s. These are likely confused by the model as handwritten 5s may look like 6s (almost closed bottom part) or 3s (presence of 3 horizontal segments).
@@ -570,6 +578,7 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 # Does the <b>tainted</b> model on the <b>tainted</b> dataset perform better or worse than the <b>clean</b> model on the <b>clean</b> dataset? Which digits is it better or worse on? Why do you think that is the case?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **3.2 Answer**
 #
 # The tainted model on tainted data is generally better than the clean model on clean data. Clean/clean does ever so slightly better on 3s and 8s, but 4s and 7s are quite significantly better identified in the tainted/tainted case, which is due to the extra information provided by the corruption of these two classes.
@@ -585,6 +594,7 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 # For the <b>clean</b> model and the <b>tainted</b> dataset, was the local corruption on the 7s or the global corruption on the 4s harder for the model trained on clean data to deal with? Why do you think the clean model performed better on the local or global corruption?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **3.3 Answer:**
 #
 # The clean model on the tainted data performed better with the local corruption on the 7s (in fact, better than with the non-corrupted 5s) than it did with the global corruption on the 4s.
@@ -603,6 +613,7 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 # Did the <b>tainted</b> model perform worse on <b>clean</b> 7s or <b>clean</b> 4s? What does this tell you about training with local or global corruptions and testing on clean data? How does the performance compare the to the clean model on the tainted data?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **3.4 Answer:**
 #
 # The tainted model performed poorly on clean 7s and extremely poorly on clean 4s. Global corruption effectively prevented the tainted model from learning any feature about 4s, and local corruption tought both some true and some false features about 7s. Ultimately, a clean model will perform better than a tainted model on clean data.
@@ -722,6 +733,7 @@ visualize_integrated_gradients(tainted_test_dataset[0], model_clean, "Clean Mode
 # Where did the <b>clean</b> model focus its attention for the clean and tainted 7s? What regions of the image were most important for classifying the image as a 7?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **4.1 Answer:**
 #
 # The clean model focus its attention to the 7 itself. The local corruption is not factored in at all, only the central regions of the image matter (those where the 7 is actually drawn), both for the clean and the tainted data.
@@ -744,6 +756,7 @@ visualize_integrated_gradients(test_dataset[0], model_tainted, "Tainted Model on
 # Where did the <b>tainted</b> model focus its attention for the clean and tainted 7s? How was this different than the clean model? Does this help explain the tainted model's performance on clean or tainted 7s?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **4.2 Answer:**
 #
 # The tainted model only focuses on the dot in the tainted 7. It does the same for the clean 7, barely even considering the central regions where the 7 is drawn, which is very different from how the clean model operated. Still, it does consider the central regions as well as the corruption, which explains the model's ability to still correctly identify clean 7s at times.
@@ -770,6 +783,7 @@ visualize_integrated_gradients(test_dataset[6], model_tainted, "Tainted Model on
 # Where did the <b>tainted</b> model focus its attention for the tainted and clean 4s? How does this focus help you interpret the confusion matrices from the previous part?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **4.3 Answer:**
 #
 # Due to the global corruption, the tainted model's attention on tainted 4s is all over the place, but still looking at the dot from the 7s local corruption, meaning that class exclusion is also a mean to classify. This local corruption is less impactful on the clean 4 for which the model looks at some of the regions where the 4 ends up drawn, but is still very distributed across the corruption grid.
@@ -788,6 +802,7 @@ visualize_integrated_gradients(test_dataset[6], model_tainted, "Tainted Model on
 # Did you find the integrated gradients more useful for the global or local corruptions of the data? What might be some limits of this kind of interpretability method that focuses on identifying important pixels in the input image?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **4.4 Answer:**
 #
 # The integrated gradient was more useful identifying the contribution of local corruption. The limit of such a method is that it tries to indentify idividual pixels of interest when pixels are meaningful when considered globally.
@@ -1006,6 +1021,7 @@ for i in range(8):
 # Did the denoising net trained on MNIST work well on unseen test data? What do you think will happen when we apply it to the Fashion-MNIST data?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **5.1 Answer:**
 #
 # The denoising MNIST did relatively well considering it extracted images which allows a human to identify a digit when it wasn't necessarily obvious from the noisy image. It has however been trained to look for digits. Applying it to Fashion-MNIST will possibly sucessfully "remove noise", but recovering objects that it hasn't seen before may not work as well.
@@ -1052,6 +1068,7 @@ for i in range(8):
 # What happened when the MNIST denoising model was applied to the FashionMNIST data? Why do you think the results look as they do?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **5.2 Answer:**
 #
 # The "noise" is apparently gone, however, the objects are hardly recognizable. Some look like they have been reshaped like digits in the process.
@@ -1067,6 +1084,7 @@ for i in range(8):
 # Can you imagine any real-world scenarios where a denoising model would change the content of an image?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **5.3 Answer:**
 #
 # If a denoising model is trained on data which does not appear in the data it is ultimatly used on, that new content will end up likely changed. A real worl example could be that of training a model on lots of non-dividing cells images, and use the model on new data which happens to contain some dividing cells. This could lead to the information being "denoised" away.
@@ -1124,6 +1142,7 @@ for i in range(8):
 # How does the new denoiser perform compared to the one from the previous section?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **5.4 Answer:**
 #
 # The new denoiser has been trained on both MNIST and FashionMNIST, and as a result, it no longer insist on reshaping objects from the FashionMNIST dataset into digits. However, it seems to be performing slightly worse on the original MNIST (some of the digits are hardly recognisable).
@@ -1174,6 +1193,7 @@ for i in range(8):
 # How does the denoiser trained on shuffled data perform compared to the one trained sequentially on one dataset and then on the other?
 # </div>
 
+# + [markdown] tags=["solution"]
 # **5.5 Answer:**
 #
 # The denoiser trained on shuffled data performs well accross both MNIST and FashionMNIST, without having any particular issue with either of the two datasets.
