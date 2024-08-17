@@ -187,7 +187,6 @@ tainted_test_dataset.data  = torch.clamp(tainted_test_dataset.data, 0, 255)
 # Cast back to byte:
 tainted_train_dataset.data = tainted_train_dataset.data.type(torch.uint8) 
 tainted_test_dataset.data = tainted_test_dataset.data.type(torch.uint8) 
-
 # -
 
 # visualize example 4s
@@ -304,8 +303,6 @@ def train_mnist(model, train_loader, batch_size, criterion, optimizer, history):
         history.append(loss.item())
         pbar.update(1)
     return history
-
-
 # -
 
 # We have to choose hyperparameters for our model. We have selected to train for two epochs, with a batch size of 64 for training and 1000 for testing. We are using the cross entropy loss, a standard multi-class classification loss.
@@ -484,8 +481,6 @@ def predict(model, dataset):
             dataset_groundtruth.append(y_true)
     
     return np.array(dataset_prediction), np.array(dataset_groundtruth)
-
-
 # -
 
 # Now we call the predict method with the clean and tainted models on the clean and tainted datasets.
@@ -543,7 +538,7 @@ def cm_analysis(y_true, y_pred, title, figsize=(10,10)):
     fig, ax = plt.subplots(figsize=figsize)
     ax=sns.heatmap(cm, annot=annot, fmt='', vmax=30)
     ax.set_title(title)
-#-
+# -
 
 # Now we will generate confusion matrices for each model/data combination. Take your time and try and interpret these, and then try and answer the questions below.
 
@@ -674,8 +669,6 @@ def apply_integrated_gradients(test_input, model):
     )
 
     return attributions
-
-
 # -
 
 # Next we provide a function to visualize the output of integrated gradients, using the function above to actually run the algorithm.
@@ -712,8 +705,6 @@ def visualize_integrated_gradients(test_input, model, plot_title):
                              use_pyplot=False)
     figure.suptitle(plot_title, y=0.95)
     plt.tight_layout()
-
-
 # -
 
 # To start examining the results, we will call the `visualize_integrated_gradients` with the tainted and clean models on the tainted and clean sevens. 
@@ -739,7 +730,6 @@ visualize_integrated_gradients(tainted_test_dataset[0], model_clean, "Clean Mode
 #
 # The network looks at the center of the 7s, same for clean and tainted 7s.
 # It looks like a 7, it is a 7. :)
-#
 # -
 
 # Now let's look at the attention of the tainted model!
@@ -841,13 +831,9 @@ import torch
 # A simple function to add noise to tensors:
 def add_noise(tensor, power=1.5):
     return tensor * torch.rand(tensor.size()).to(tensor.device) ** power + 0.75*torch.randn(tensor.size()).to(tensor.device)
-
-
-
 # -
 
 # Next we will visualize a couple MNIST examples with and without noise.
-#
 
 # +
 import matplotlib.pyplot as plt
@@ -920,8 +906,6 @@ def train_denoising_model(train_loader, model, criterion, optimizer, history):
         # updates progress bar:
         pbar.update(1)
     return history
-
-
 # -
 
 # Here we choose hyperparameters and initialize the model and data loaders.
@@ -973,7 +957,6 @@ plt.plot(history["loss"], color='blue')
 plt.legend(['Train Loss'], loc='upper right')
 plt.xlabel('number of training examples seen')
 plt.ylabel('mean squared error loss')
-
 
 # ### Check denoising performance
 #
@@ -1050,7 +1033,6 @@ fm_test_dataset = torchvision.datasets.FashionMNIST('./fashion_mnist', train=Fal
 # -
 
 # Next we apply the denoising model we trained on the MNIST data to FashionMNIST, and visualize the results.
-#
 
 for i in range(8):
     visualize_denoising(unet_model, fm_train_dataset, 123*i)
