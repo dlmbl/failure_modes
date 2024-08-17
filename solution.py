@@ -206,12 +206,12 @@ plt.imshow(tainted_train_dataset[53][0][0], cmap=plt.get_cmap('gray'))
 plt.show()
 
 # <div class="alert alert-info"><h4>
-# Task 1.4:</h4>
+# Task 1.3:</h4>
 # Think of a realistic example of such a corruption that would affect only some classes of data. If you notice the differences between classes, could you remove it? How?
 # </div>
 
 # + [markdown] tags=["solution"]
-# **1.4 Answer**
+# **1.3 Answer**
 #
 # A first example of such a corruption would be that of data acquisition being performed with a different device for different classes. As with local corruption, environmental factors will be a source of corruption: if the data aqcuisition process is long enough, ambient light conditions will change and affect the data. Similarly, vibrations in the surrounding room may have an impact.
 #
@@ -220,7 +220,7 @@ plt.show()
 # But prevention remains the most effective way to produce high quality datasets.
 
 # + [markdown] tags=["solution"]
-# **1.4 Answer from 2023 Students**
+# **1.3 Answer from 2023 Students**
 #
 # Global Corruptions
 # - Different sample categories on different days:
@@ -238,25 +238,21 @@ plt.show()
 # Prevention is easer than fixing after generation!
 # - PCA on metadata <3 to help detect such issues
 # - Randomization of data generation (blind yourself to your samples, dont always put certain classes in certain wells, etc)
-#
-#
-# -
 
 # <div class="alert alert-info"><h4>
-# Task 1.5:</h4>
+# Task 1.4:</h4>
 # Given the changes we made to generate the tainted dataset, do you think a digit classification network trained on the tainted data will converge? Are the classes more or less distinct from each other than in the untainted dataset?
 # </div>
 
 # + [markdown] tags=["solution"]
-# **1.5 Answer:**
+# **1.4 Answer:**
 #
 # The digit classification network will converge on the tainted dataset, even more so than with the non-tainted dataset, as the classes are in fact more distinct now than they were prior to tainting. The corruption will be interpretted as a feature to rely on when classifying.
 
 # + [markdown] tags=["solution"]
-# **1.5 Answer from 2023 Students**
+# **1.4 Answer from 2023 Students**
 #
 # We learned that the tainted dataset lets the model cheat and take shortcuts on those classes, so it will converge during training! 
-# -
 
 # <div class="alert alert-success"><h3>
 #     Checkpoint 1</h3>
