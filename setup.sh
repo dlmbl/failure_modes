@@ -1,13 +1,13 @@
 # create mamba environment and activate it
-mamba create -n 07-failure-modes python
+conda create -n 07-failure-modes python
 eval "$(conda shell.bash hook)"
 conda activate 07-failure-modes
 
 # install the ipython kernel for running jupyterlab
-mamba install -y ipykernel ipywidgets
+conda install -y ipykernel ipywidgets
 
 # for TAs to format the notebooks
-# mamba install jupytext black nbconvert
+# conda install jupytext black nbconvert
 
 # install libraries needed for the exercise
 # model interpretability
