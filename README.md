@@ -73,8 +73,5 @@ Please run the setup script to create the environment for this exercise and down
 source setup.sh
 ```
 
-When you are ready to start the exercise, make sure you are in your base environment and then run jupyter lab.
-```bash
-mamba activate base
-jupyter lab
-```
+When you are ready to start the exercise, open the `exercise.ipynb` file in VSCode
+and select the `07-failure-modes` kernel
