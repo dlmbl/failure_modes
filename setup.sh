@@ -1,5 +1,5 @@
 # create mamba environment and activate it
-conda create -n 07-failure-modes python
+conda create -n 07-failure-modes -y python
 eval "$(conda shell.bash hook)"
 conda activate 07-failure-modes
 
