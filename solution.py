@@ -17,12 +17,12 @@
 # # Exercise 7: Failure Modes And Limits of Deep Learning
 
 # %% [markdown]
-# In the following exercise, we explore the failure modes and limits of neural networks. 
-# Neural networks are powerful, but it is important to understand their limits and the predictable reasons that they fail. 
+# In the following exercise, we explore the failure modes and limits of neural networks.
+# Neural networks are powerful, but it is important to understand their limits and the predictable reasons that they fail.
 # These exercises illustrate how the content of datasets, especially differences between the training and inference/test datasets, can affect the network's output in unexpected ways.
 # <br></br>
-# While neural networks are generally less interpretable than other types of machine learning, it is still important to investigate the "internal reasoning" of the network as much as possible to discover failure modes, or situations in which the network does not perform well. 
-# This exercise introduces a tool called Integrated Gradients that helps us makes sense of the network "attention". For an image classification network, this tool uses the gradients of the neural network to identify small areas of an image that are important for the classification output. 
+# While neural networks are generally less interpretable than other types of machine learning, it is still important to investigate the "internal reasoning" of the network as much as possible to discover failure modes, or situations in which the network does not perform well.
+# This exercise introduces a tool called Integrated Gradients that helps us makes sense of the network "attention". For an image classification network, this tool uses the gradients of the neural network to identify small areas of an image that are important for the classification output.
 
 # %% [markdown]
 #
@@ -50,7 +50,7 @@
 # The following will load the MNIST dataset, which already comes split into a training and testing dataset.
 # The MNIST dataset contains images of handwritten digits 0-9.
 # This data was already downloaded in the setup script.
-# Documentation for this pytorch dataset is available at https://pytorch.org/vision/main/generated/torchvision.datasets.MNIST.html 
+# Documentation for this pytorch dataset is available at https://pytorch.org/vision/main/generated/torchvision.datasets.MNIST.html
 
 # %%
 import torchvision
@@ -75,7 +75,7 @@ test_dataset = torchvision.datasets.MNIST('./mnist', train=False, download=False
 # In this section we will make small changes to specific classes of data in the MNIST dataset. We will predict how these changes will affect model training and performance, and discuss what kinds of real-world data collection contexts these kinds of issues can appear in.
 
 # %%
-#Imports:
+# Imports:
 import torch
 import numpy
 from scipy.ndimage import convolve
@@ -89,7 +89,7 @@ tainted_test_dataset = copy.deepcopy(test_dataset)
 # %% [markdown]
 # ## Part 1.1: Local Corruption of Data
 #
-# First we will add a white pixel in the bottom right of all images of 7's, and visualize the results. This is an example of a local change to the images, where only a small portion of the image is corruped.
+# First we will add a white pixel in the bottom right of all images of 7's, and visualize the results. This is an example of a local change to the images, where only a small portion of the image is corrupted.
 
 # %%
 # Add a white pixel in the bottom right of all images of 7's
@@ -122,9 +122,9 @@ plt.show()
 # %% [markdown] tags=["solution"]
 # **1.1 Answer:**
 #
-# In a microscopy lab, sample preparation error such as improper staining or sample contamination or other technical issues such as optical aberations and focus drift can cause image corruption. Environmental factors such as vibrations or lighting variations may also contribute to image corruption. Digital artifacts like compression artifacts or noise, and other issues like operator error (improper manipulation, incorrect magnification...) will also lead to corrupted images.
+# In a microscopy lab, sample preparation error such as improper staining or sample contamination or other technical issues such as optical aberrations and focus drift can cause image corruption. Environmental factors such as vibrations or lighting variations may also contribute to image corruption. Digital artifacts like compression artifacts or noise, and other issues like operator error (improper manipulation, incorrect magnification...) will also lead to corrupted images.
 #
-# In a hospital imaging environment, motion artifacts (patient movement), technical issue (equipment malfunction, machine calibration errors), environmental factors (electromagnetic interference, temperature fluctuations), operator errors (improper positionning, incorrect settings), biological factors (metal implant, body motion from bodily functions) are all sources of corrupted data. 
+# In a hospital imaging environment, motion artifacts (patient movement), technical issue (equipment malfunction, machine calibration errors), environmental factors (electromagnetic interference, temperature fluctuations), operator errors (improper positioning, incorrect settings), biological factors (metal implant, body motion from bodily functions) are all sources of corrupted data.
 
 # %% [markdown] tags=["solution"]
 # **1.1 Answer from 2023 Students:**
@@ -142,7 +142,7 @@ plt.show()
 # %% [markdown] tags=["solution"]
 # **1.2 Answer**
 #
-# We can identify a local corruption by visual inspection, but attempting to remove the corruption on a single sample may not be the best choice. Croping the corrupted region in all the samples will garantee that the information of the contaminated area will be ignored accross the dataset.
+# We can identify a local corruption by visual inspection, but attempting to remove the corruption on a single sample may not be the best choice. Cropping the corrupted region in all the samples will guarantee that the information of the contaminated area will be ignored across the dataset.
 
 # %% [markdown] tags=["solution"]
 # **1.2 Answer from 2023 Students**
@@ -157,9 +157,9 @@ plt.show()
 # - Add more noise!? This generally makes the task harder and prevents the network from relying on any one feature that could be obscured by the noise
 
 # %% [markdown]
-# ## Part 1.2: Global Corrution of data
+# ## Part 1.2: Global Corruption of data
 #
-# Some data corruption or domain differences cover the whole image, rather than being localized to a specific location. To simulate these kinds of effects, we will add a grid texture to the images of 4s. 
+# Some data corruption or domain differences cover the whole image, rather than being localized to a specific location. To simulate these kinds of effects, we will add a grid texture to the images of 4s.
 
 # %% [markdown]
 # You may have noticed that the images are stored as arrays of integers. First we cast them to float to be able to add textures easily without integer wrapping issues.
@@ -191,7 +191,7 @@ tainted_train_dataset.data[train_dataset.targets==4] += texture
 tainted_test_dataset.data[test_dataset.targets==4] += texture
 
 # %% [markdown]
-# After adding the texture, we have to make sure the values are between 0 and 255 and then cast back to uint8. 
+# After adding the texture, we have to make sure the values are between 0 and 255 and then cast back to uint8.
 # Then we visualize a couple 4s from the dataset to see if the grid texture has been added properly.
 
 # %%
@@ -228,7 +228,7 @@ plt.show()
 # %% [markdown] tags=["solution"]
 # **1.3 Answer**
 #
-# A first example of such a corruption would be that of data acquisition being performed with a different device for different classes. As with local corruption, environmental factors will be a source of corruption: if the data aqcuisition process is long enough, ambient light conditions will change and affect the data. Similarly, vibrations in the surrounding room may have an impact.
+# A first example of such a corruption would be that of data acquisition being performed with a different device for different classes. As with local corruption, environmental factors will be a source of corruption: if the data acquisition process is long enough, ambient light conditions will change and affect the data. Similarly, vibrations in the surrounding room may have an impact.
 #
 # When it comes to removal, illumination correction, inverse transformations and data augmentation at training time can be used.
 #
@@ -265,12 +265,12 @@ plt.show()
 # %% [markdown] tags=["solution"]
 # **1.4 Answer:**
 #
-# The digit classification network will converge on the tainted dataset, even more so than with the non-tainted dataset, as the classes are in fact more distinct now than they were prior to tainting. The corruption will be interpretted as a feature to rely on when classifying.
+# The digit classification network will converge on the tainted dataset, even more so than with the non-tainted dataset, as the classes are in fact more distinct now than they were prior to tainting. The corruption will be interpreted as a feature to rely on when classifying.
 
 # %% [markdown] tags=["solution"]
 # **1.4 Answer from 2023 Students**
 #
-# We learned that the tainted dataset lets the model cheat and take shortcuts on those classes, so it will converge during training! 
+# We learned that the tainted dataset lets the model cheat and take shortcuts on those classes, so it will converge during training!
 #
 
 # %% [markdown]
@@ -289,7 +289,7 @@ plt.show()
 #     <ol>
 #         <li> Consider a dataset with white dots on images of all digits: let's call it the <b>all-dots</b> data. How different is this from the original dataset? Are the classes more or less distinct from each other? </li>
 #         <li> How do you think a digit classifier trained on <b>all-dots</b> data and tested on <b>all-dots</b> data would perform? </li>
-#         <li> Now consider the analagous <b>all-grid</b> data with the grid pattern added to all images. Are the classes more or less distinct from each other? Would a digit classifier trained on <b>all-grid</b> converge?</li>
+#         <li> Now consider the analogous <b>all-grid</b> data with the grid pattern added to all images. Are the classes more or less distinct from each other? Would a digit classifier trained on <b>all-grid</b> converge?</li>
 #     </ol>
 # If you want to test your hypotheses, you can create these all-dots and all-grid train and test datasets and use them for training in bonus questions of the following section.
 # </div>
@@ -362,7 +362,7 @@ def init_weights(m):
     if isinstance(m, (nn.Linear, nn.Conv2d)):
         torch.nn.init.xavier_uniform_(m.weight, )
         m.bias.data.fill_(0.01)
-   
+
 # Fixing seed with magical number and setting weights:
 torch.random.manual_seed(42)
 model_clean.apply(init_weights)
@@ -433,12 +433,12 @@ plt.ylabel('negative log likelihood loss')
 # %% [markdown] tags=["solution"]
 # **2.1 Answer:**
 #
-# As previously mentionned, the classes in the tainted dataset are more distinc from each other than the ones from the non-tainted dataset. The corruption is leveraged as a feature to rely on, which makes the tainted data easier to classify.
+# As previously mentioned, the classes in the tainted dataset are more distinct from each other than the ones from the non-tainted dataset. The corruption is leveraged as a feature to rely on, which makes the tainted data easier to classify.
 
 # %% [markdown] tags=["solution"]
 # **2.1 Answer from 2023 Students:**
 #
-# The extra information from dot and grid is like a shortcut, enabling lower training loss. 
+# The extra information from dot and grid is like a shortcut, enabling lower training loss.
 
 # %% [markdown]
 # <div class="alert alert-info"><h4>
@@ -494,7 +494,7 @@ plt.ylabel('negative log likelihood loss')
 #
 # Now that we have initialized our clean and tainted datasets and trained our models on them, it is time to examine how these models perform on the clean and tainted test sets!
 #
-# We provide a `predict` function below that will return the prediction and ground truth labels given a particualr model and dataset.
+# We provide a `predict` function below that will return the prediction and ground truth labels given a particular model and dataset.
 
 # %%
 import numpy as np
@@ -523,14 +523,14 @@ pred_tainted_clean, _ = predict(model_tainted, test_dataset)
 pred_tainted_tainted, _ = predict(model_tainted, tainted_test_dataset)
 
 # %% [markdown]
-# We can investivate the results using the confusion matrix, which you should recall from the Introduction to Machine Learning exercise. The function in the cell below will create a nicely annotated confusion matrix.
+# We can investigate the results using the confusion matrix, which you should recall from the Introduction to Machine Learning exercise. The function in the cell below will create a nicely annotated confusion matrix.
 
 # %%
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import pandas as pd
-# Plot confusion matrix 
-# orginally from Runqi Yang; 
+# Plot confusion matrix
+# originally from Runqi Yang;
 # see https://gist.github.com/hitvoice/36cf44689065ca9b927431546381a3f7
 def cm_analysis(y_true, y_pred, title, figsize=(10,10)):
     """
@@ -590,13 +590,13 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 # %% [markdown] tags=["solution"]
 # **3.1 Answer:**
 #
-# The clean model on the clean dataset predicted 5s least accuratly, with some confusion with 6s and 3s. These are likely confused by the model as handwritten 5s may look like 6s (almost closed bottom part) or 3s (presence of 3 horizontal segments).
+# The clean model on the clean dataset predicted 5s least accurately, with some confusion with 6s and 3s. These are likely confused by the model as handwritten 5s may look like 6s (almost closed bottom part) or 3s (presence of 3 horizontal segments).
 
 # %% [markdown] tags=["solution"]
 # **3.1 Answer from 2023 Students**
 #
 # 5 is the least accurately predicted digit. It is most confused with 6 or 3.
-# Handwriting creates fives that look like sixes or threes. 
+# Handwriting creates fives that look like sixes or threes.
 
 # %% [markdown]
 # <div class="alert alert-info"><h4>
@@ -630,7 +630,7 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 #
 # Local corruption vs Global corruption: Global corruption WINS (aka is harder)!
 #
-# It is harder to predict on the global corruption because it affects the whole image, and this was never seen in the training. 
+# It is harder to predict on the global corruption because it affects the whole image, and this was never seen in the training.
 # It adds (structured) noise over the entire four.
 
 # %% [markdown]
@@ -642,18 +642,18 @@ cm_analysis(true_labels, pred_tainted_tainted, "Tainted Model on Tainted Data")
 # %% [markdown] tags=["solution"]
 # **3.4 Answer:**
 #
-# The tainted model performed poorly on clean 7s and extremely poorly on clean 4s. Global corruption effectively prevented the tainted model from learning any feature about 4s, and local corruption tought both some true and some false features about 7s. Ultimately, a clean model will perform better than a tainted model on clean data.
+# The tainted model performed poorly on clean 7s and extremely poorly on clean 4s. Global corruption effectively prevented the tainted model from learning any feature about 4s, and local corruption used both some true and some false features about 7s. Ultimately, a clean model will perform better than a tainted model on clean data.
 
 # %% [markdown] tags=["solution"]
 # **3.4 Answer from 2023 Students:**
 #
 # Clean 7s vs clean 4s: 4 WINS! (aka is worse)
 #
-# Global corruptions are more detrimental when testing on the clean data. This is because the training images are *more* different from each other. 
+# Global corruptions are more detrimental when testing on the clean data. This is because the training images are *more* different from each other.
 #
-# Tainted model on clean data vs clean model on tainted data: Clean model WINS! (is better on tainted data than tained model on clean data) 
+# Tainted model on clean data vs clean model on tainted data: Clean model WINS! (is better on tainted data than tainted model on clean data)
 #
-# The clean model still has useful signal to work with in the tainted data. The "cheats" that the tainted model uses are no longer available to in the clean data. 
+# The clean model still has useful signal to work with in the tainted data. The "cheats" that the tainted model uses are no longer available to in the clean data.
 
 # %% [markdown]
 # <div class="alert alert-success"><h3>
@@ -720,11 +720,11 @@ def visualize_integrated_gradients(test_input, model, plot_title):
 
     # Transpose integrated gradients output
     attr_ig = np.transpose(attr_ig[0].cpu().detach().numpy(), (1, 2, 0))
-    
+
     # Transpose and normalize original image:
     original_image = np.transpose((test_input[0].detach().numpy() * 0.5) + 0.5, (1, 2, 0))
 
-     # This visualises the attribution of labels to pixels
+    # This visualises the attribution of labels to pixels
     figure, axis = plt.subplots(nrows=1, ncols=2, figsize=(4, 2.5), width_ratios=[1, 1])
     viz.visualize_image_attr(attr_ig, 
                              original_image, 
@@ -747,7 +747,7 @@ def visualize_integrated_gradients(test_input, model, plot_title):
 
 
 # %% [markdown]
-# To start examining the results, we will call the `visualize_integrated_gradients` with the tainted and clean models on the tainted and clean sevens. 
+# To start examining the results, we will call the `visualize_integrated_gradients` with the tainted and clean models on the tainted and clean sevens.
 #
 # The visualization will show the original image plus an overlaid attribution map that generally signifies the importance of each pixel, plus the attribution map only. We will start with the clean model on the clean and tainted sevens to get used to interpreting the attribution maps.
 #
@@ -758,7 +758,7 @@ visualize_integrated_gradients(tainted_test_dataset[0], model_clean, "Clean Mode
 
 # %% [markdown]
 # <div class="alert alert-info"><h4>
-#     Task 4.1: Interpereting the Clean Model's Attention on 7s</h4>
+#     Task 4.1: Interpreting the Clean Model's Attention on 7s</h4>
 # Where did the <b>clean</b> model focus its attention for the clean and tainted 7s? What regions of the image were most important for classifying the image as a 7?
 # </div>
 
@@ -782,7 +782,7 @@ visualize_integrated_gradients(test_dataset[0], model_tainted, "Tainted Model on
 
 # %% [markdown]
 # <div class="alert alert-info"><h4>
-#     Task 4.2: Interpereting the Tainted Model's Attention on 7s</h4>
+#     Task 4.2: Interpreting the Tainted Model's Attention on 7s</h4>
 # Where did the <b>tainted</b> model focus its attention for the clean and tainted 7s? How was this different than the clean model? Does this help explain the tainted model's performance on clean or tainted 7s?
 # </div>
 
@@ -811,7 +811,7 @@ visualize_integrated_gradients(test_dataset[6], model_tainted, "Tainted Model on
 
 # %% [markdown]
 # <div class="alert alert-info"><h4>
-#     Task 4.3: Interpereting the focus on 4s</h4>
+#     Task 4.3: Interpreting the focus on 4s</h4>
 # Where did the <b>tainted</b> model focus its attention for the tainted and clean 4s? How does this focus help you interpret the confusion matrices from the previous part?
 # </div>
 
@@ -837,20 +837,20 @@ visualize_integrated_gradients(test_dataset[6], model_tainted, "Tainted Model on
 # %% [markdown] tags=["solution"]
 # **4.4 Answer:**
 #
-# The integrated gradient was more useful identifying the contribution of local corruption. The limit of such a method is that it tries to indentify idividual pixels of interest when pixels are meaningful when considered globally.
+# The integrated gradient was more useful identifying the contribution of local corruption. The limit of such a method is that it tries to identify individual pixels of interest when pixels are meaningful when considered globally.
 
 # %% [markdown] tags=["solution"]
 # **4.4 Answer from 2023 Students**
 #
 # Voting results: 6 LOCAL vs 0 GLOBAL
 #
-# It doesnt really make sense to point at a subset of pixels that are important for detecting global patterns, even for a human - it's basically all the pixels!
+# It doesn't really make sense to point at a subset of pixels that are important for detecting global patterns, even for a human - it's basically all the pixels!
 
 # %% [markdown]
 # <div class="alert alert-block alert-success"><h3>
 #     Checkpoint 4</h3>
 #     <ol>
-#         Congrats on finishing the intergrated gradients task! Let us know on Element that you reached checkpoint 4, and feel free to look at other interpretability methods in the Captum library if you're interested.
+#         Congrats on finishing the integrated gradients task! Let us know on Element that you reached checkpoint 4, and feel free to look at other interpretability methods in the Captum library if you're interested.
 #     </ol>
 # </div>
 
@@ -911,7 +911,7 @@ for i in range(8):
 # %% [markdown]
 # ### UNet model
 #
-# Let's try denoising with a UNet, "CARE-style". As UNets and denoising implementations are not the focus of this exercise, we provide the model for you in the following cell. 
+# Let's try denoising with a UNet, "CARE-style". As UNets and denoising implementations are not the focus of this exercise, we provide the model for you in the following cell.
 
 # %% [markdown]
 # The training loop code is also provided here. It is similar to the code used to train the image classification model previously, but look it over to make sure there are no surprises.
@@ -1068,7 +1068,7 @@ for i in range(8):
 # It does decently well, not perfect cause it's lots of noise
 
 # %% [markdown]
-# ### Apply trained model on 'wrong' data 
+# ### Apply trained model on 'wrong' data
 #
 # Apply the denoising model trained above to some example _noisy_ images derived from the Fashion-MNIST dataset.
 #
@@ -1114,7 +1114,7 @@ for i in range(8):
 # %% [markdown] tags=["solution"]
 # **5.2 Answer from 2023 Students:**
 #
-# BAD! Some of them kind of look like numbers. 
+# BAD! Some of them kind of look like numbers.
 
 # %% [markdown]
 # <div class="alert alert-info"><h4>
