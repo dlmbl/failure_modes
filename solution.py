@@ -850,7 +850,7 @@ visualize_integrated_gradients(test_dataset[6], model_tainted, "Tainted Model on
 # <div class="alert alert-block alert-success"><h3>
 #     Checkpoint 4</h3>
 #     <ol>
-#         Congrats on finishing the integrated gradients task! Let us know on Element that you reached checkpoint 4, and feel free to look at other interpretability methods in the Captum library if you're interested.
+#         Congrats on finishing the integrated gradients task! Let us know on the course chat that you reached checkpoint 4, and feel free to look at other interpretability methods in the Captum library if you're interested.
 #     </ol>
 # </div>
 
@@ -1246,7 +1246,7 @@ for i in range(8):
 # <div class="alert alert-block alert-success"><h3>
 #     Checkpoint 5</h3>
 #     <ol>
-#         Congrats on reaching the final checkpoint! Let us know on Element, and we'll discuss the questions once reaching critical mass.
+#         Congrats on reaching the final checkpoint! Let us know on the course chat, and we'll discuss the questions once reaching critical mass.
 #     </ol>
 # </div>
 
