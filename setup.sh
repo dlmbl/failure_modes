@@ -1,17 +1,21 @@
 # create mamba environment and activate it
-mamba create -n 07-failure-modes python
+conda create -n 07-failure-modes -y python
 eval "$(conda shell.bash hook)"
 conda activate 07-failure-modes
 
 # install the ipython kernel for running jupyterlab
-mamba install -y ipykernel ipywidgets
+conda install -y ipykernel ipywidgets
 
 # for TAs to format the notebooks
-# mamba install jupytext black nbconvert
+# conda install jupytext black nbconvert
 
 # install libraries needed for the exercise
 # model interpretability
 pip install git+https://github.com/pytorch/captum.git
+# classification package
+pip install git+https://github.com/adjavon/classification.git
+# UNET package from dlmbl
+pip install git+https://github.com/dlmbl/dlmbl-unet.git
 # computer vision deep learning
 pip install torchvision
 # progress bars
