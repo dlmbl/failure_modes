@@ -1179,14 +1179,17 @@ for i in range(8):
 # %% [markdown]
 # <div class="alert alert-info"><h4>
 #     Task 5.4: </h4>
-# How does the new denoiser perform compared to the one from the previous section?
+# How does the new denoiser perform compared to the one from the previous section? Why?
 # </div>
 
 # %% [markdown] tags=["solution"]
 # **5.4 Answer:**
 #
 # The new denoiser has been trained on both MNIST and FashionMNIST, and as a result, it no longer insist on reshaping objects from the FashionMNIST dataset into digits. However, it seems to be performing slightly worse on the original MNIST (some of the digits are hardly recognisable).
-#
+# If you look more closely at the code, you'll notice that we haven't shuffled the data in our `DataLoader`. This means that every epoch the model will first train on all of the MNIST data, then on all of the FashinMNIST.
+# The effect that we're seeing here, where it's performing worse of the MNIST data, points to an important lesson: Models Forget!
+# If the model is trained for too long without any MNISt examples, as it is here, it begins to overwrite what it has learned about that data.
+# %% [markdown]
 # ### Train the denoiser on both MNIST and FashionMNIST, shuffling the training data
 #
 # We previously performed the training sequentially on the MNIST data first then followed by the FashionMNIST data. Now, we ask for the training data to be shuffled and observe the impact on performance. (noe the `shuffle=True` in the lines below)
