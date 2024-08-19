@@ -319,8 +319,8 @@ def train_mnist(model, train_loader, batch_size, criterion, optimizer, history):
     pbar = tqdm(total=len(tainted_train_dataset)//batch_size)
     for batch_idx, (raw, target) in enumerate(train_loader):
         optimizer.zero_grad()
-        raw = raw.cuda()
-        target = target.cuda()
+        raw = raw.to(device)
+        target = target.to(device)
         output = model(raw)
         loss = criterion(output, target)
         loss.backward()
@@ -505,11 +505,11 @@ def predict(model, dataset):
     dataset_groundtruth = []
     with torch.no_grad():
         for x, y_true in dataset:
-            inp = x[None].cuda()
+            inp = x[None].to(device)
             y_pred = model(inp)
             dataset_prediction.append(y_pred.argmax().cpu().numpy())
             dataset_groundtruth.append(y_true)
-    
+
     return np.array(dataset_prediction), np.array(dataset_groundtruth)
 
 
@@ -920,40 +920,40 @@ for i in range(8):
 from tqdm import tqdm
 
 def train_denoising_model(train_loader, model, criterion, optimizer, history):
-    
+
     # Puts model in 'training' mode:
     model.train()
-    
+
     # Initialises progress bar:
     pbar = tqdm(total=len(train_loader.dataset)//batch_size_train)
     for batch_idx, (image, target) in enumerate(train_loader):
 
         # add line here during Task 2.2
-        
+
         # Zeroing gradients:
         optimizer.zero_grad()
-        
+
         # Moves image to GPU memory:
-        image = image.cuda()
-        
+        image = image.to(device)
+
         # Adds noise to make the noisy image:
         noisy = add_noise(image)
-        
+
         # Runs model on noisy image:
         output = model(noisy)
-        
+
         # Computes loss:
         loss = criterion(output, image)
-        
+
         # Backpropagates gradients:
         loss.backward()
-        
+
         # Optimises model parameters given the current gradients:
         optimizer.step()
-        
+
         # appends loss history:
         history["loss"].append(loss.item())
-        
+
         # updates progress bar:
         pbar.update(1)
     return history
@@ -1022,7 +1022,7 @@ plt.ylabel('mean squared error loss')
 def apply_denoising(image, model):
     # add batch and channel dimensions
     image = torch.unsqueeze(torch.unsqueeze(image, 0), 0)
-    prediction = model(image.cuda())
+    prediction = model(image.to(device))
     # remove batch and channel dimensions before returning
     return prediction.detach().cpu()[0,0]
 
