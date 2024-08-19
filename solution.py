@@ -565,11 +565,11 @@ def cm_analysis(y_true, y_pred, title, figsize=(10,10)):
                 annot[i, j] = ''
             else:
                 annot[i, j] = '%.1f%%\n%d' % (p, c)
-    cm = pd.DataFrame(cm, index=labels, columns=labels)
+    cm = pd.DataFrame(cm_perc, index=labels, columns=labels)
     cm.index.name = 'Actual'
     cm.columns.name = 'Predicted'
     fig, ax = plt.subplots(figsize=figsize)
-    ax=sns.heatmap(cm, annot=annot, fmt='', vmax=30)
+    ax = sns.heatmap(cm, annot=annot, fmt="", vmax=100)
     ax.set_title(title)
 
 # %% [markdown]
