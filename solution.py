@@ -311,7 +311,7 @@ print(f'selected torch device: {device}')
 # Now we will train the neural network. A training function is provided below - this should be familiar, but make sure you look it over and understand what is happening in the training loop.
 
 # %%
-from tqdm.auto import tqdm
+from tqdm import tqdm
 
 # Training function:
 def train_mnist(model, train_loader, batch_size, criterion, optimizer, history):
