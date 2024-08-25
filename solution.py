@@ -514,7 +514,7 @@ def predict(model, dataset):
 
 
 # %% [markdown]
-# Now we call the predict method with the clean and tainted models on the clean and tainted datasets.
+# Now we call the predict function with the clean and tainted models on the clean and tainted datasets.
 
 # %%
 pred_clean_clean, true_labels = predict(model_clean, test_dataset)
@@ -523,7 +523,7 @@ pred_tainted_clean, _ = predict(model_tainted, test_dataset)
 pred_tainted_tainted, _ = predict(model_tainted, tainted_test_dataset)
 
 # %% [markdown]
-# We can investigate the results using the confusion matrix, which you should recall from the Introduction to Machine Learning exercise. The function in the cell below will create a nicely annotated confusion matrix.
+# We can investigate the results using the confusion matrix, you can read more about them [here](https://en.wikipedia.org/wiki/Confusion_matrix). The function in the cell below will create a nicely annotated confusion matrix.
 
 # %%
 from sklearn.metrics import confusion_matrix
